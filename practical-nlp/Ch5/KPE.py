@@ -16,7 +16,7 @@ mytext = open('Data/myarticle.txt').read()
 #last part of the document is generally filled with information that we don't need
 # so we take them out
 textlength = mytext.__len__()
-mytext = mytext[:textlength-20]
+mytext = mytext[:textlength-100]
 
 #convert the text into a spacy document.
 doc = textacy.make_spacy_doc(mytext, lang=en)
@@ -38,3 +38,8 @@ print("SGRank output: ", [kps for kps, weights in keyterms.sgrank(doc, topn=10)]
 
 terms = set([term for term,weight in keyterms.textrank(doc)])
 print(utils.aggregate_term_variants(terms))
+
+#A way to look at key phrases is just consider all noun chunks as potential ones.
+#However, keep in mind this will result in a lot of phrases, and no way to rank them!
+print("\n THE  NOUNE CHUNKS \n")
+print([chunk for chunk in textacy.extract.noun_chunks(doc)])
